@@ -11,7 +11,7 @@ cp .env.example .env
 ```
 3. Install project
 ```
-docker run --rm -v $(pwd):/app composer install --ignore-platform-reqs
+docker run --rm -v "$(pwd):/var/www/html" -w /var/www/html composer:latest composer install --ignore-platform-reqs
 ```
 3. Build Docker container and start it:
 ```
@@ -112,7 +112,10 @@ GET /api/v1/result/{id}
 ## Testing
 ### Before running first tests
 ```
-docker exec -it baltpool-php php bin/console doctrine:schema:create --env=test
+php bin/console doctrine:database:create --env=test
+```
+```
+php bin/console doctrine:schema:create --env=test
 ```
 ### Test command
 ```
