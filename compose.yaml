@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  php:
+    container_name: baltpool-php
+    image: php:8.2-cli
+    volumes:
+      - .:/var/www/symfony
+    working_dir: /var/www/symfony
+    command: >
+      bash -c "docker-php-ext-install pdo pdo_mysql
+      && php -S 0.0.0.0:80 -t public"
+    ports:
+      - "8000:80"
+    environment:
+      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE}"
+
+  database:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
