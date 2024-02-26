@@ -119,7 +119,7 @@ php bin/console doctrine:schema:create --env=test
 ```
 ### Test command
 ```
-docker exec -it baltpool-php php bin/phpunit
+php bin/phpunit
 ```
 ## Technologies and Patterns
 ### Symfony Messenger and Scheduler
